@@ -39,13 +39,6 @@ http://<device-ip>:8080/screenshot
 
 The response is a JPEG image (quality 80) of whatever is currently on screen.
 
-### Home Assistant Generic Camera
-
-Add via **Settings → Integrations → Add Integration → Generic Camera**:
-
-- **Still image URL:** `http://<device-ip>:8080/screenshot`
-- **Content type:** `image/jpeg`
-
 ## How it works
 
 1. An HTTP GET to `/screenshot` signals the ESPHome main loop via a FreeRTOS binary semaphore.
