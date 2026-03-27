@@ -1,3 +1,5 @@
+#FIX For P4 version
+
 # esphome-lvgl-screenshot
 
 An ESPHome custom component that serves a live JPEG screenshot of the LVGL framebuffer over HTTP.
