@@ -146,23 +146,27 @@ void LvglScreenshot::do_capture_() {
   // ------------------------------------------------------------------
   // Convert RGB565 → RGB888 into rgb_buf_ (row-major, top-down)
   // ------------------------------------------------------------------
-  for (uint32_t y = 0; y < height; y++) {
-    uint8_t *row = this->rgb_buf_ + y * width * 3u;
-    for (uint32_t x = 0; x < width; x++) {
-      lv_color_t c = lvgl_buf[y * width + x];
+for (uint32_t y = 0; y < height; y++) {
+  uint8_t *row = this->rgb_buf_ + y * width * 3u;
 
-      // ESPHome builds LVGL with LV_COLOR_16_SWAP=1, so the green channel
-      // is split across green_h (bits 2:0 of low byte) and green_l (bits 15:13).
-      uint8_t r5 = c.ch.red;
-      uint8_t g6 = (uint8_t) ((c.ch.green_h << 3) | c.ch.green_l);
-      uint8_t b5 = c.ch.blue;
+  for (uint32_t x = 0; x < width; x++) {
+    lv_color_t c = lvgl_buf[y * width + x];
 
-      // Scale 5-bit → 8-bit and 6-bit → 8-bit by replicating the MSBs
-      row[x * 3 + 0] = (uint8_t) ((r5 << 3) | (r5 >> 2));
-      row[x * 3 + 1] = (uint8_t) ((g6 << 2) | (g6 >> 4));
-      row[x * 3 + 2] = (uint8_t) ((b5 << 3) | (b5 >> 2));
-    }
+    uint16_t raw = c.full;
+
+#if LV_COLOR_16_SWAP
+    raw = (raw << 8) | (raw >> 8);
+#endif
+
+    uint8_t r5 = (raw >> 11) & 0x1F;
+    uint8_t g6 = (raw >> 5)  & 0x3F;
+    uint8_t b5 =  raw        & 0x1F;
+
+    row[x * 3 + 0] = (uint8_t)((r5 << 3) | (r5 >> 2));
+    row[x * 3 + 1] = (uint8_t)((g6 << 2) | (g6 >> 4));
+    row[x * 3 + 2] = (uint8_t)((b5 << 3) | (b5 >> 2));
   }
+}
 
   // ------------------------------------------------------------------
   // Encode RGB888 → JPEG via stb_image_write (quality 80)
