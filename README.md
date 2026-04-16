@@ -4,13 +4,14 @@
 - Fork自https://github.com/dcgrove/esphome-lvgl-screenshot
 - 修复了原分支在P4上的部分界面截图输出花屏问题
 - 针对esphome lvgl 9 适配，不支持旧版lvgl 8
+- 内存懒分配，不截图时不占用额外PSRAM
 - 全部为 AI Coding
 ## 使用要求
 - 仅在ESP32-P4连接MIPI_DSI显示器上测试通过
 - esphome ver >= 2026.4.0
 - LVGL 100% buffer_size
-- 帧缓冲拷贝占用PSRAM 2~3MB
-- ## 为节省系统资源，建议只在调试或需要截图时使用此组件，日常使用请移除并重新编译固件
+- 截图时帧缓冲拷贝可能占用数MB PSRAM （1280x800分辨率上为4~5M）
+- ## 内存余量不足时谨慎使用
 
 ## yaml配置
 
