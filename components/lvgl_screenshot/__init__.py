@@ -1,10 +1,7 @@
-"""LVGL Screenshot Component - serves a BMP snapshot of the LVGL framebuffer via HTTP."""
-
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_PORT
 
-CODEOWNERS = ["@dcgrove"]
 DEPENDENCIES = ["lvgl"]
 
 lvgl_screenshot_ns = cg.esphome_ns.namespace("lvgl_screenshot")
