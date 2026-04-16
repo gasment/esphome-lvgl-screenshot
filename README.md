@@ -6,8 +6,7 @@
 - 针对esphome lvgl 9 适配，不支持旧版lvgl 8
 - 全部为 AI Coding
 ## 使用要求
-
-- ESP32-P4
+- 仅在ESP32-P4连接MIPI_DSI显示器上测试通过
 - esphome ver >= 2026.4.0
 - LVGL 100% buffer_size
 - 帧缓冲拷贝占用PSRAM 2~3MB
